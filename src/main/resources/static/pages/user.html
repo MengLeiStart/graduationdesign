@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
+    <title>Document</title>
+</head>
+<style>
+    .el-input__inner {
+        width: 200px;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #replace {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #uploadimg {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .el-menu {
+        margin-bottom: 30px;
+    }
+
+    #selectfile {
+        display: none;
+    }
+
+    #informationform {
+        margin-left: 580px;
+    }
+
+    .headermenu img {
+        float: right;
+
+        vertical-align: middle;
+    }
+
+    .headermenu span {
+        float: right;
+        margin-right: 200px;
+        line-height: 60px;
+        vertical-align: middle;
+    }
+    .el-form-item{
+        margin-left: 80px;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <header class="headermenu">
+            <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                background-color="skyblue" text-color="black" active-text-color="red">
+                <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
+                <span>欢迎登录,</span>
+                <img width="60px" height="60px">
+            </el-menu>
+        </header>
+        <form enctype="multipart/form-data;" method="post" class="efo">
+            <img :src="url" id="preview" class="rmg" width="100px" height="100px">
+            <input type="file" name="photoss" value="photoss" id="selectfile" onchange="setImagePreview()">
+            <br>
+            <el-button type="primary" plain id="replace">选择头像</el-button>
+            <br>
+            <el-button type="success" id="uploadimg" plain v-on:click="uploads()">上传头像</el-button>
+            <br>
+        </form>
+        <br>
+        <el-form ref="form" :model="form" label-width="80px" id="informationform">
+            <el-form-item label="昵称">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input v-model="form.password"></el-input>
+            </el-form-item>
+            <el-form-item label="性别">
+                <el-select v-model="form.sex" placeholder="请选择性别">
+                    <el-option label="男" value="man"></el-option>
+                    <el-option label="女" value="woman"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="生日">
+                <el-col :span="11">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;">
+                    </el-date-picker>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="是否在校">
+                <el-switch v-model="form.status"></el-switch>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">提交修改</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</body>
+<script src="../plugins/vue.js"></script>
+<script src="../plugins/jquery-1.11.0.min.js"></script>
+<script src="../plugins/axios-0.18.0.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#replace').click(function () {
+            $('#selectfile').click();
+        })
+    })
+</script>
+<script>
+    function setImagePreview() {
+        var docObj = document.getElementById("selectfile");
+        var imgObjPreview = document.getElementById("preview");
+        if (docObj.files && docObj.files[0]) {
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+        }
+    }
+</script>
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                form: {
+                    name: '',
+                    sex: '',
+                    date1: '',
+                    status: false,
+                    password: ''
+                },
+                activeIndex2: '',
+                //图片地址
+                url: '',
+
+            }
+        },
+        methods: {
+            //插件表单提交数据
+            onSubmit() {
+                console.log('submit!');
+            },
+            //图片上传方法
+            uploads() {
+                var form = document.querySelector('.efo');
+                var fd = new FormData(form);
+
+                axios.post("/files", fd).then((res) => {
+                    this.url = res.data;
+                })
+            },
+            //跳转首页
+            userindex() {
+                window.location.href = '../index.html'
+            },
+            //顶部导航栏执行的方法以及对应参数
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+        }
+    });
+
+
+</script>
+
+</html>
