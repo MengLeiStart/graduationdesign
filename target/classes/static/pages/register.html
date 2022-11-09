@@ -13,7 +13,7 @@
             <h1>欢迎注册</h1>
             <span>已有帐号？</span> <a href="login.html">登录</a>
         </div>
-        <form id="reg-form" action="#" method="get">
+        <form id="reg-form" action="/users/" method="post">
             <table>
                 <tr>
                     <td>昵称</td>
@@ -41,7 +41,7 @@
                     <td>验证码</td>
                     <td class="inputs">
                         <input name="checkCode" type="text" id="checkCode">
-                        <img id="identify-img" src="/user">
+                        <img id="identify-img" src="/users/checkCode">
                         <a href="#" id="changeImg" v-on:click="changeImg()">看不清？</a>
                     </td>
                 </tr>
@@ -51,6 +51,7 @@
             </div>
             <br class="clear">
         </form>
+        <iframe name="form" id="form" style="display:none"></iframe>
     </div>
 </div>
 
@@ -58,6 +59,15 @@
 <script src="../plugins/vue.js"></script>
 <script src="../plugins/axios-0.18.0.js"></script>
 <script src="../plugins/jquery-1.11.0.min.js"></script>
+<script>
+    $("#submit").click();
+
+    $("#form").load(function(){
+        var text = $(this).contents().find("body").text(); //获取到的是json的字符串
+        var j = $.parseJSON(text);  //json字符串转换成json对象
+        console.log(j)
+    })
+</script>
 <script>
     new Vue({
         el: "#app",
@@ -67,11 +77,9 @@
         },
         methods: {
             changeImg() {
-                $('#identify-img').attr('src','/user?'+new Date().getMilliseconds())
+                $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
             },
-            mounted() {
 
-            }
         }
     })
 </script>
