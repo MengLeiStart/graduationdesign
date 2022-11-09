@@ -11,5 +11,6 @@ public class WebMvcSupport implements WebMvcConfigurer {
         registry.addResourceHandler("/pages/**").addResourceLocations("/pages/");
         registry.addResourceHandler("/plugins/**").addResourceLocations("/plugins/");
         registry.addResourceHandler("index.html").addResourceLocations("index.html");
+        registry.addResourceHandler("/img/**").addResourceLocations("file:/D:/graduation/src/main/resources/static/imgs/");
     }
 }

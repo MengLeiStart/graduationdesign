@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
+    <title>Document</title>
+</head>
+<style>
+    .el-select .el-input {
+        width: 130px;
+    }
+
+    .input-with-select .el-input-group__prepend {
+        background-color: #f6f6f6;
+        text-emphasis-color: black;
+        color: #2a6be0;
+    }
+
+    .el-input__inner {
+        background-color: #f8f1f1;
+    }
+
+    .sousuo {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .showimg {
+        display: block;
+        margin: 0 auto;
+    }
+
+    textarea {
+        display: inline-block;
+        resize: none;
+        margin-left: 33%;
+        vertical-align: bottom;
+    }
+
+    .insert {
+        vertical-align: bottom;
+    }
+
+    .details ul {
+        display: block;
+        margin-left: 30.5%;
+    }
+
+    .details li {
+
+        list-style: none;
+    }
+
+    h4 {
+        margin: 50px 33%;
+    }
+
+    .details p {
+        margin-left: 40%;
+    }
+
+    .headermenu img {
+        float: right;
+
+        vertical-align: middle;
+    }
+
+    .headermenu span {
+        float: right;
+        margin-right: 200px;
+        line-height: 60px;
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="headermenu">
+            <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                background-color="skyblue" text-color="black" active-text-color="red">
+                <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
+                <el-menu-item index="2" v-on:click="userinformation()">个人中心</el-menu-item>
+                <span>欢迎登录,</span>
+                <img width="60px" height="60px">
+            </el-menu>
+        </div>
+        <main>
+            <div class="details">
+                <!-- 用户图片展示区 -->
+                <form>
+                    <h4></h4>
+                    <img src="" width="300px" height="300px" class="showimg">
+                    <p></p>
+                </form>
+
+                <ul class="showli">
+
+                </ul>
+                <textarea cols="68" rows="5" class="txt" placeholder="我来评论..."></textarea>
+                <el-button type="primary" round class="insert" id="uploadimg" plain v-on:click="uploads()">发表
+                </el-button>
+
+            </div>
+
+        </main>
+
+    </div>
+</body>
+<script src="../plugins/vue.js"></script>
+<script src="../plugins/axios-0.18.0.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
+<script src="../plugins/jquery-1.11.0.min.js"></script>
+<script>
+
+    new Vue({
+        el: "#app",
+
+        data() {
+            return {
+                activeIndex2: '',
+                shows: ''
+            };
+        },
+        methods: {
+            //顶部导航栏执行的方法以及对应参数
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            userindex() {
+                window.location.href = '../index.html'
+            },
+            uploads() {
+                var ul = document.querySelector('.showli')
+                var lis = document.createElement("li")
+                ul.append(lis)
+                lis.innerHTML = ($(".txt").val())
+                $(".txt").val("")
+            },
+            userinformation() {
+                location.replace("../pages/user.html");
+            }
+        },
+        mounted() {
+            this.shows = sessionStorage.getItem("show");
+        }
+
+    })
+
+</script>
+
+
+</html>

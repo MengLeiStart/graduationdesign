@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plugins/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/default(1).css">
+    <title>Document</title>
+</head>
+<style>
+    .el-select .el-input {
+        width: 130px;
+    }
+
+    .input-with-select .el-input-group__prepend {
+        background-color: #f6f6f6;
+        text-emphasis-color: black;
+        color: #2a6be0;
+    }
+
+    .el-input__inner {
+        background-color: #f8f1f1;
+    }
+
+    .sousuo {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+<style type="text/css">
+    #gallery-wrapper {
+        position: relative;
+        max-width: 75%;
+        width: 75%;
+        margin: 50px auto;
+    }
+
+    img.thumb {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .white-panel {
+        position: absolute;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0px 1px 2px rgba(6, 166, 246, 0.837);
+        padding: 10px;
+    }
+
+    .white-panel h1 {
+        font-size: 1em;
+    }
+
+    .white-panel h1 a {
+        color: #A92733;
+    }
+
+    .white-panel:hover {
+        box-shadow: 1px 1px 10px rgba(16, 168, 249, 0.725);
+        margin-top: -5px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .headermenu img {
+        float: right;
+
+        vertical-align: middle;
+    }
+
+    .headermenu span {
+        float: right;
+        margin-right: 200px;
+        line-height: 60px;
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <header class="headermenu">
+            <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                background-color="skyblue" text-color="black" active-text-color="red">
+                <el-menu-item index="1" v-on:click="userup()">发表</el-menu-item>
+                <el-submenu index="2">
+                    <template slot="title">类别</template>
+                    <el-menu-item index="2-1">表白</el-menu-item>
+                    <el-menu-item index="2-2">捞人</el-menu-item>
+                    <el-menu-item index="2-3">日常</el-menu-item>
+                    <el-menu-item index="2-4">二手</el-menu-item>
+                    <el-menu-item index="2-5">拼车</el-menu-item>
+                    <el-menu-item index="2-6">综合</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="3" v-on:click="userinformation()">个人中心</el-menu-item>
+                <span>欢迎登录,</span>
+                <img width="60px" height="60px">
+
+            </el-menu>
+
+        </header>
+
+        <div style="margin-top: 30px;" class="sousuo">
+            <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+                <el-select v-model="select" slot="prepend" placeholder="请选择">
+                    <el-option label="表白" value="1"></el-option>
+                    <el-option label="找人" value="2"></el-option>
+                    <el-option label="日常" value="3"></el-option>
+                    <el-option label="二手" value="4"></el-option>
+                    <el-option label="拼车" value="5"></el-option>
+                    <el-option label="综合" value="6"></el-option>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search" v-on:click="searchneed(select,input3)"></el-button>
+            </el-input>
+        </div>
+        <main>
+            <section id="gallery-wrapper">
+                <article class="white-panel" v-for="show in usershow" v-on:click="details(show)">
+                    <img src="imgs/a.jpg" class="thumb">
+                    <h1><a href="#">{{show}}</a></h1>
+                    <p>ds</p>
+                </article><br>
+            </section>
+        </main>
+    </div>
+
+</body>
+<script src="plugins/vue.js"></script>
+<script src="plugins/jquery-1.11.0.min.js"></script>
+<script src="plugins/axios-0.18.0.js"></script>
+<script src="plugins/element-ui/lib/index.js"></script>
+<script src="plugins/pinterest_grid.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#gallery-wrapper").pinterest_grid({
+            no_columns: 5,
+            padding_x: 15,
+            padding_y: 10,
+            margin_bottom: 50,
+            single_column_breakpoint: 700
+        });
+
+    });
+</script>
+<script>
+    sessionStorage.setItem("show", this.show);
+</script>
+<script>
+    new Vue({
+        el: "#app",
+
+        data() {
+            return {
+                activeIndex2: '',
+                input3: '',
+                select: '',
+                usershow: ["1", "2", "3"]
+            }
+        },
+        methods: {
+            //顶部导航栏执行的方法以及对应参数
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            //搜索框执行的方法以及对应参数
+            searchneed(select, input3) {
+                console.log(select, input3);
+            },
+            userup() {
+                window.location.href = 'pages/upload.html'
+            },
+            //点击盒子即可查看详情页面
+            details(show) {
+                location.replace("pages/informationdetails.html");
+                window.sessionStorage.setItem('show', show);
+            },
+            //个人中心
+            userinformation() {
+                location.replace("pages/user.html");
+            }
+        }
+
+    })
+
+</script>
+
+</html>
