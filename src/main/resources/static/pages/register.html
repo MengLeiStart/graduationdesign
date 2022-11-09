@@ -13,20 +13,20 @@
             <h1>欢迎注册</h1>
             <span>已有帐号？</span> <a href="login.html">登录</a>
         </div>
-        <form id="reg-form" action="/users/" method="post">
+        <form id="reg-form" target="form">
             <table>
                 <tr>
                     <td>昵称</td>
                     <td class="inputs">
-                        <input name="username" type="text" id="username">
+                        <input name="username" type="text" id="username" v-model="form.name">
                     </td>
                 </tr>
                 <tr>
                     <td>账号</td>
                     <td class="inputs">
-                        <input name="username" type="text" id="usernumber" placeholder="请输入6-10位数字">
+                        <input name="account" type="text" id="account" placeholder="请输入6-10位数字">
                         <br>
-                        <span id="usernumber_err" class="err_msg" style="display: none">账号不符合格式或已被注册</span>
+                        <span id="account_err" class="err_msg" style="display: none">账号不符合格式或已被注册</span>
                     </td>
                 </tr>
                 <tr>
@@ -43,15 +43,16 @@
                         <input name="checkCode" type="text" id="checkCode">
                         <img id="identify-img" src="/users/checkCode">
                         <a href="#" id="changeImg" v-on:click="changeImg()">看不清？</a>
+                        <span id="checkCode_err" class="err_msg" style="display: none">验证码输入有误</span>
                     </td>
                 </tr>
             </table>
             <div class="buttons">
-                <input value="注 册" type="submit" id="reg_btn">
+                <input value="注 册" type="submit" id="reg_btn" v-on:click="submit()">
             </div>
             <br class="clear">
         </form>
-        <iframe name="form" id="form" style="display:none"></iframe>
+        <iframe name="form" id="form" style="display: none"></iframe>
     </div>
 </div>
 
@@ -60,25 +61,33 @@
 <script src="../plugins/axios-0.18.0.js"></script>
 <script src="../plugins/jquery-1.11.0.min.js"></script>
 <script>
-    $("#submit").click();
-
-    $("#form").load(function(){
-        var text = $(this).contents().find("body").text(); //获取到的是json的字符串
-        var j = $.parseJSON(text);  //json字符串转换成json对象
-        console.log(j)
-    })
 </script>
 <script>
     new Vue({
         el: "#app",
         data() {
             return {
+                form:{
+                    username:'ds'
+                }
             }
         },
         methods: {
             changeImg() {
                 $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
             },
+            submit(){
+                var form = document.querySelector('#reg-form')
+                var fd = new FormData(form)
+                axios.post("/users/insert",fd).then((res)=>{
+
+                    if (res.data.code == 20050){
+                        var cder = document.getElementById('checkCode_err')
+                        cder.style.display="block"
+                        $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
+                    }
+                })
+            }
 
         }
     })
