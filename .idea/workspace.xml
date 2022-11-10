@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="414c8847-b21c-432c-904b-9dd6bddbebc6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/Code.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/Code.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/imgs/reg_bg_min.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/imgs/reg_bg_min.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,10 +50,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../untitled" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/imgs" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\graduation\src\main\resources\static\imgs" />
       <recent name="D:\graduation\src\main\java\com\study\util" />
       <recent name="D:\graduation\src\main\resources\static" />
     </key>
@@ -81,7 +84,7 @@
       <workItem from="1667993768054" duration="1728000" />
       <workItem from="1667996882063" duration="6099000" />
       <workItem from="1668047562447" duration="4615000" />
-      <workItem from="1668079744019" duration="4446000" />
+      <workItem from="1668079744019" duration="6336000" />
     </task>
     <servers />
   </component>

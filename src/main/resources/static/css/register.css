@@ -12,11 +12,15 @@
 }
 a, img {
     border: 0;
+
 }
 
 body {
-    background-image: url("../imgs/reg_bg_min.jpg") ;
+    background-image: url("../imgs/reg_bg_min.jpg");
     text-align: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+
 }
 
 table {

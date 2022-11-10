@@ -21,15 +21,18 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+
+    //生成验证码
     @RequestMapping("/checkCode")
     public void checkCode(HttpServletResponse response, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
         ServletOutputStream os = response.getOutputStream();
         String code = CheckCodeUtil.outputVerifyImage(100,50,os,4);
-
         session.setAttribute("checkCodegen",code);
     }
+    //注册功能
     @PostMapping("/insert")
+    //将前端传过来的数据与后端的变量绑定
     public Result insert(HttpServletResponse response, HttpServletRequest request, @Param("username")String username,
                          @Param("account")String account, @Param("password")String password
                         , @Param("checkCode")String checkCode) throws ServletException, IOException {
@@ -52,10 +55,12 @@ public class UserController {
             if (user != null){
                 return new Result(Code.SAVE_ERR,"账号已被注册");
             }else {
+                //将属性值放入user对象中
                 User user1 = new User();
                 user1.setAccount(account);
                 user1.setPassword(password);
                 user1.setUsername(username);
+                //向数据库中添加user对象
                 userDao.insert(user1);
                 if (userDao.selectOne(laq) != null){
                     return new Result(Code.SAVE_OK,"注册成功");
