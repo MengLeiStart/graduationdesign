@@ -5,6 +5,7 @@ import com.study.domain.User;
 import com.study.util.CheckCodeUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletException;
@@ -28,12 +29,20 @@ public class UserController {
 
         session.setAttribute("checkCodegen",code);
     }
-    @RequestMapping("/insert")
+    @PostMapping("/insert")
     public Result insert(HttpServletResponse response, HttpServletRequest request, @Param("username")String username,
                          @Param("account")String account, @Param("password")String password
                         , @Param("checkCode")String checkCode) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Object checkCodegen = session.getAttribute("checkCodegen");
+        System.out.println(checkCodegen);
+        if (username == null){
+            return new Result(Code.SAVE_ERR,"昵称不能为空");
+        }else if (account == null){
+            return new Result(Code.SAVE_ERR,"账号不能为空");
+        }else if (password == null){
+            return new Result(Code.SAVE_ERR,"密码不能为空");
+        }
         //比较用户输入的验证码和生成的验证码
         if (checkCodegen.equals(checkCode)){
             LambdaQueryWrapper<User> laq = new LambdaQueryWrapper();

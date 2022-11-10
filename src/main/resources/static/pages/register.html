@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -18,13 +18,13 @@
                 <tr>
                     <td>昵称</td>
                     <td class="inputs">
-                        <input name="username" type="text" id="username" v-model="form.name">
+                        <input name="username" type="text" id="username">
                     </td>
                 </tr>
                 <tr>
                     <td>账号</td>
                     <td class="inputs">
-                        <input name="account" type="text" id="account" placeholder="请输入6-10位数字">
+                        <input name="account" type="text" id="account" placeholder="请输入6-10位数字" v-on:click="accountdisplay()">
                         <br>
                         <span id="account_err" class="err_msg" style="display: none">账号不符合格式或已被注册</span>
                     </td>
@@ -40,7 +40,7 @@
                 <tr>
                     <td>验证码</td>
                     <td class="inputs">
-                        <input name="checkCode" type="text" id="checkCode">
+                        <input  v-on:focus="checkCodeDisplay()" name="checkCode" type="text" id="checkCode">
                         <img id="identify-img" src="/users/checkCode">
                         <a href="#" id="changeImg" v-on:click="changeImg()">看不清？</a>
                         <span id="checkCode_err" class="err_msg" style="display: none">验证码输入有误</span>
@@ -79,15 +79,32 @@
             submit(){
                 var form = document.querySelector('#reg-form')
                 var fd = new FormData(form)
-                axios.post("/users/insert",fd).then((res)=>{
+                var account = fd.get("account");
+                var password = fd.get("password");
+                    axios.post("/users/insert",fd).then((res)=>{
+                        //验证码错误代码
+                        if (res.data.code == 20050){
+                            var cder = document.getElementById('checkCode_err')
+                            cder.style.display="block"
+                            $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
+                            //账号已被注册代码
+                        }else if(res.data.code == 20010){
+                            var account = document.getElementById('account_err')
+                            account.style.display="block"
+                        }
+                    })
 
-                    if (res.data.code == 20050){
-                        var cder = document.getElementById('checkCode_err')
-                        cder.style.display="block"
-                        $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
-                    }
-                })
+
+            },
+            accountdisplay(){
+                var account = document.getElementById('account_err')
+                account.style.display="none"
+            },
+            checkCodeDisplay(){
+                var code = document.getElementById('checkCode_err')
+                code.style.display = "none"
             }
+
 
         }
     })
