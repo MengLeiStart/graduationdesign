@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>欢迎注册</title>
     <link href="../css/register.css" rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
 </head>
 <body>
 <div id="app">
@@ -25,16 +26,16 @@
                     <td>账号</td>
                     <td class="inputs">
                         <input name="account" type="text" id="account" placeholder="请输入6-10位数字" v-on:click="accountdisplay()">
-                        <br>
-                        <span id="account_err" class="err_msg" style="display: none">账号不符合格式或已被注册</span>
+
+                        <span id="account_err" class="err_msg" style="display: none">账号违规或已存在</span>
                     </td>
                 </tr>
                 <tr>
                     <td>密码</td>
                     <td class="inputs">
-                        <input name="password" type="password" id="password" placeholder="由英文、特殊符号及数字组成">
+                        <input name="password" type="password" id="password" placeholder="由字母、数字、下划线组成(最多15位)">
                         <br>
-                        <span id="password_err" class="err_msg" style="display: none">密码格式有误</span>
+                        <span id="password_err" class="err_msg" style="display: none">密码不符合规则</span>
                     </td>
                 </tr>
                 <tr>
@@ -60,6 +61,7 @@
 <script src="../plugins/vue.js"></script>
 <script src="../plugins/axios-0.18.0.js"></script>
 <script src="../plugins/jquery-1.11.0.min.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
 <script>
 </script>
 <script>
@@ -68,7 +70,6 @@
         data() {
             return {
                 form:{
-                    username:'ds'
                 }
             }
         },
@@ -79,22 +80,47 @@
             submit(){
                 var form = document.querySelector('#reg-form')
                 var fd = new FormData(form)
+                //获取用户输入账号和密码
                 var account = fd.get("account");
                 var password = fd.get("password");
-                    axios.post("/users/insert",fd).then((res)=>{
-                        //验证码错误代码
-                        if (res.data.code == 20050){
-                            var cder = document.getElementById('checkCode_err')
-                            cder.style.display="block"
-                            $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
-                            //账号已被注册代码
-                        }else if(res.data.code == 20010){
-                            var account = document.getElementById('account_err')
-                            account.style.display="block"
-                        }
-                    })
-
-
+                //如果密码没输入或不符合规则，不允许提交表单
+                if (password == null){
+                    var passerr = document.getElementById('password_err');
+                    passerr.style.display="block"
+                }else {
+                    //核验用户输入账号，由数字组成，6-10位
+                    var match = /\d{6,10}/
+                    if(match.exec(account) != null ){
+                        //账号和密码符合规则允许提交表单
+                        axios.post("/users/insert",fd).then((res)=>{
+                            //验证码输入错误提示代码
+                            if (res.data.code == 20050){
+                                var code = document.getElementById('checkCode_err')
+                                //页面显示错误提示
+                                code.style.display="block"
+                                $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
+                                //账号已被注册错误提示代码
+                            }else if(res.data.code == 20010){
+                                var account = document.getElementById('account_err')
+                                //页面显示错误提示
+                                account.style.display="block"
+                            }else if (res.data.code == 20011){
+                                //页面出现成功的提示，两面后更新登录界面
+                                this.$message({
+                                    type: 'success',
+                                    message: '注册成功'
+                                });
+                                setTimeout(function (){
+                                    location.replace("register.html")
+                                },2000)
+                            }
+                        })
+                    }else{
+                        //如果用户没有输入账号或和正则表单时不匹配则页面出现错误提示
+                        var accounterr = document.getElementById('account_err');
+                        accounterr.style.display="block"
+                    }
+                }
             },
             accountdisplay(){
                 var account = document.getElementById('account_err')
@@ -104,9 +130,7 @@
                 var code = document.getElementById('checkCode_err')
                 code.style.display = "none"
             }
-
-
-        }
+        },
     })
 </script>
 </html>

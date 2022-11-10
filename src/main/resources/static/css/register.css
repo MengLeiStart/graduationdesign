@@ -130,7 +130,7 @@ input[type="button"]:active, input[type="submit"]:active {
 }
 .err_msg{
     color: red;
-    padding-right: 170px;
+
 }
 #password_err,#tel_err{
     padding-right: 195px;
