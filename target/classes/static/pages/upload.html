@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,10 @@
     <title>Document</title>
 </head>
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
     .el-select el-input {
         width: 130px;
     }
@@ -83,13 +87,13 @@
             <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
-                <span>欢迎登录,</span>
-                <img width="60px" height="60px">
+                <span>欢迎登录</span>
+                <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </header>
         <main>
             <form enctype="multipart/form-data;" method="post" class="efo">
-                <img :src="url" id="preview" class="rmg" width="300px" height="300px">
+                <img :src="url2" id="preview" class="rmg" width="300px" height="300px">
                 <input type="file" name="photoss" value="photoss" id="selectfile" onchange="setImagePreview()">
                 <br>
                 <el-button type="primary" plain id="replace">选择图片</el-button>
@@ -143,7 +147,8 @@
         data() {
             return {
                 activeIndex2: '',
-                url: '',
+                url2: '',
+                url:'/imgs/default.jpg',
                 options: [{
                     value: '选项1',
                     label: '表白'

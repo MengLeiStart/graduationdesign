@@ -33,7 +33,8 @@
                 <tr>
                     <td>密码</td>
                     <td class="inputs">
-                        <input name="password" type="password" id="password" placeholder="由字母、数字、下划线组成(最多15位)">
+                        <input name="password" type="password" id="password" placeholder="由字母、数字、下划线组成(最多15位)"
+                        v-on:focus="passworderrdisplay()" >
                         <br>
                         <span id="password_err" class="err_msg" style="display: none">密码不符合规则</span>
                     </td>
@@ -69,11 +70,11 @@
         el: "#app",
         data() {
             return {
-                form:{
-                }
+
             }
         },
         methods: {
+            //用户点击看不清，重新发起请求，更换验证码
             changeImg() {
                 $('#identify-img').attr('src','/users/checkCode?'+new Date().getMilliseconds())
             },
@@ -83,8 +84,10 @@
                 //获取用户输入账号和密码
                 var account = fd.get("account");
                 var password = fd.get("password");
+                //用户输入的密码中存在空白字符的正则表达式
+                var rule = /[ ]/
                 //如果密码没输入或不符合规则，不允许提交表单
-                if (password == null){
+                if (password == null || rule.exec(password) != null){
                     var passerr = document.getElementById('password_err');
                     passerr.style.display="block"
                 }else {
@@ -105,13 +108,14 @@
                                 //页面显示错误提示
                                 account.style.display="block"
                             }else if (res.data.code == 20011){
-                                //页面出现成功的提示，两面后更新登录界面
+                                //页面出现成功的提示
                                 this.$message({
                                     type: 'success',
                                     message: '注册成功'
                                 });
+                                //用户注册成功，两秒后自动跳转登录界面
                                 setTimeout(function (){
-                                    location.replace("register.html")
+                                    location.replace("login.html")
                                 },2000)
                             }
                         })
@@ -123,12 +127,19 @@
                 }
             },
             accountdisplay(){
+                //用户重新输入账号时，错误信息隐藏
                 var account = document.getElementById('account_err')
                 account.style.display="none"
             },
             checkCodeDisplay(){
+                //用户重新输入验证码是,错误信息隐藏
                 var code = document.getElementById('checkCode_err')
                 code.style.display = "none"
+            },
+            //用户重新输入密码时错误信息隐藏
+            passworderrdisplay(){
+                var passworderr = document.getElementById('password_err');
+                passworderr.style.display = "none"
             }
         },
     })

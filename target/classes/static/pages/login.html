@@ -1,32 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <title>login</title>
     <link href="../css/login.css" rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/element-ui/lib/theme-chalk/index.css">
 </head>
 
 <body>
-    <div id="loginDiv" style="height: 350px">
-        <form action="#" id="form">
+    <div id="loginDiv"  style="height: 350px">
+        <form id="form" target="ifram">
             <h1 id="loginMsg">LOGIN IN</h1>
-            <div id="errorMsg" style="display: none">用户名或密码不正确</div>
-            <p>Username:<input id="username" name="username" type="text" ></p>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{login_msg}}
+            <p>账号:<input id="username" name="account" v-bind:value="account" type="text" v-on:focus="displaynone()"></p>
 
-            <p>Password: <input id="password" name="password" type="password" ></p>
-            <p>Remember:<input id="remember" name="remember" type="checkbox"></p>
+            <p>密码: <input id="password" name="password" v-bind:value="password" type="password" v-on:focus="displaynone()"></p>
+            <p>记住我:<input id="remember" name="remember" type="checkbox" value="1"></p>
             <div id="subDiv">
-                <input type="submit" class="button" value="login up">
-                <input type="reset" class="button" value="reset">&nbsp;&nbsp;&nbsp;
+                <input id="submit" type="submit" class="button" value="登录" v-on:click="submit()">
+                <input type="reset" class="button" value="重置">&nbsp;&nbsp;&nbsp;
                 <a href="register.html">没有账号？</a>
             </div>
         </form>
+        <iframe name="ifram" id="ifram" style="display: none"></iframe>
     </div>
 </body>
-<script src="../plugins/axios.min.js"></script>
-<script>
+<script src="../plugins/vue.js"></script>
+<script src="../plugins/axios-0.18.0.js"></script>
+<script src="../plugins/element-ui/lib/index.js"></script>
+<script src="../plugins/jquery-1.11.0.min.js"></script>
+<script src="../plugins/jquery.cookie.js"></script>
+
+
+
+<script type="text/javascript">
 
 </script>
+<script>
+    new Vue({
+        el:"#loginDiv",
+        data(){
+            return{
+                login_msg:'',
+                account:'',
+                password:''
+            }
+        },
+        methods:{
+            submit(){
+                var form = document.getElementById("form");
+                var fd = new FormData(form);
+                var username = fd.get("account");
+                var password = fd.get("password");
+                //判断记住我是否被选中，如果选中则创建对应的cookie
+                if ($("#remember").is(":checked")){
+                    $.cookie('account',username);
+                    $.cookie('password',password);
+                }
 
+                if (password == "" || username == "" ){
+                    //如果用户未输入账号或密码显示错误信息
+                    this.login_msg = "账号密码不能为空";
+                }else{
+                    axios.post("/users/login",fd).then((res)=>{
+                        //如果数据库中没有该用户或者用户输入的账号密码不匹配时，显示页面错误信息
+                        if (res.data.code == 20040){
+                            this.login_msg = "账号或密码错误";
+                        }else{
+                            var useraccount = res.data.data
+
+                            //如果查询到该用户，跳转到index界面
+                            location.replace("../index.html")
+                            window.sessionStorage.setItem("useraccount", useraccount);
+                        }
+                    })
+                }
+            },
+            //用户重新准备输入账号密码时，将错误信息清空
+            displaynone(){
+                this.login_msg = "";
+            }
+        },
+        mounted(){
+            //获取cookie赋值给账号密码框
+            $(function (){
+                var account = $.cookie('account')
+                var pwd = $.cookie('password');
+                $("#username").val(account);
+                $("#password").val(pwd)
+
+            });
+        }
+    })
+</script>
 </html>

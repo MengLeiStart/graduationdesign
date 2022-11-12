@@ -9,6 +9,10 @@
     <title>Document</title>
 </head>
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
     .el-select .el-input {
         width: 130px;
     }
@@ -87,8 +91,8 @@
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
                 <el-menu-item index="2" v-on:click="userinformation()">个人中心</el-menu-item>
-                <span>欢迎登录,</span>
-                <img width="60px" height="60px">
+                <span>欢迎登录</span>
+                <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </div>
         <main>
@@ -125,7 +129,8 @@
         data() {
             return {
                 activeIndex2: '',
-                shows: ''
+                shows: '',
+                url:'../imgs/default.jpg'
             };
         },
         methods: {

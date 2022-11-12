@@ -18,7 +18,7 @@ public class Result {
         this.msg = msg;
     }
 
-    public Result(Object data, Integer code, String msg) {
+    public Result( Integer code, String msg,Object data) {
         this.data = data;
         this.code = code;
         this.msg = msg;
