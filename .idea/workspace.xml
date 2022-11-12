@@ -5,30 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="414c8847-b21c-432c-904b-9dd6bddbebc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/imgs/default.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/plugins/jquery.cookie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/Code.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/Code.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/Result.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/Result.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/domain/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/domain/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/imgs/reg_bg_min.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/imgs/reg_bg_min.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/informationdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/informationdetails.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/upload.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/user.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +86,8 @@
       <workItem from="1668174890320" duration="16000" />
       <workItem from="1668244466333" duration="9864000" />
       <workItem from="1668258846305" duration="4799000" />
-      <workItem from="1668263698965" duration="338000" />
+      <workItem from="1668263698965" duration="386000" />
+      <workItem from="1668264114698" duration="940000" />
     </task>
     <servers />
   </component>
