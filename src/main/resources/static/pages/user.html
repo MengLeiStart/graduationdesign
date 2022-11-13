@@ -68,13 +68,13 @@
             <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
-                <span>欢迎登录</span>
+                <span>欢迎登录{{username}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </header>
         <form enctype="multipart/form-data;" method="post" class="efo">
-            <img :src="url2" id="preview" class="rmg" width="100px" height="100px">
-            <input type="file" name="photoss" value="photoss" id="selectfile" onchange="setImagePreview()">
+            <img :src="url" id="preview" class="rmg" width="100px" height="100px">
+            <input type="file" name="userphoto" value="userphoto" id="selectfile" onchange="setImagePreview()">
             <br>
             <el-button type="primary" plain id="replace">选择头像</el-button>
             <br>
@@ -131,6 +131,7 @@
     }
 </script>
 <script>
+
     new Vue({
         el: "#app",
         data() {
@@ -143,10 +144,10 @@
                     password: ''
                 },
                 activeIndex2: '',
-                //图片地址
-                url2: '',
+                username:'',
                 //默认头像
-                url:'../imgs/default.jpg'
+                url:'../imgs/default.jpg',
+
 
             }
         },
@@ -155,13 +156,15 @@
             onSubmit() {
                 console.log('submit!');
             },
-            //图片上传方法
+            //图片上传功能
             uploads() {
                 var form = document.querySelector('.efo');
                 var fd = new FormData(form);
-
-                axios.post("/files", fd).then((res) => {
-                    this.url = res.data;
+                var account = sessionStorage.getItem('account');
+                fd.append("account",account);
+                axios.post("/users/files", fd).then((res) => {
+                    console.log(res.data.data)
+                    this.url = "/img/"+res.data.data;
                 })
             },
             //跳转首页
@@ -172,6 +175,17 @@
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
             },
+        },
+        mounted(){
+            var account = sessionStorage.getItem('account');
+            var name = sessionStorage.getItem('username');
+            this.username = name;
+            axios.get("/users/selectByAccount/"+account).then((res)=>{
+                if (res.data.msg == null || res.data.msg == ""){
+                }else {
+                    this.url = "/img/"+res.data.msg;
+                }
+            })
         }
     });
 

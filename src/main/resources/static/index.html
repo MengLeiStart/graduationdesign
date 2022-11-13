@@ -170,6 +170,7 @@
                 input3: '',
                 select: '',
                 usershow: ["1", "2", "3"],
+                //用户昵称
                 username:'',
                 url:'/imgs/default.jpg'
             }
@@ -194,13 +195,23 @@
             //个人中心
             userinformation() {
                 location.replace("pages/user.html");
+               //获取用户账号
+                var account = window.sessionStorage.getItem('useraccount');
+                //将用户账号和昵称携带至user.html
+                sessionStorage.setItem('username',this.username);
+                sessionStorage.setItem('account',account)
             }
         },
         mounted(){
             var account = window.sessionStorage.getItem('useraccount')
             axios.get("/users/selectByAccount/"+account).then((res)=>{
                  this.username = res.data.data;
+                 console.log(res.data.msg)
+                 if (res.data.msg != null || res.data.msg == ""){
+                     this.url = "/img/"+res.data.msg
+                 }
             })
+
         }
 
     })

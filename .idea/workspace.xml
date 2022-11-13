@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="414c8847-b21c-432c-904b-9dd6bddbebc6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/study/config/FileParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/config/WebMvcSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/config/WebMvcSupport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/study/config/WebMvcSupport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/config/WebMvcSupport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/pages/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/pages/user.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +26,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -39,6 +47,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -47,14 +56,18 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/imgs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/img" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\graduation\src\main\resources\static\img" />
       <recent name="D:\graduation\src\main\resources\static\imgs" />
       <recent name="D:\graduation\src\main\resources\static\plugins" />
       <recent name="D:\graduation\src\main\java\com\study\util" />
       <recent name="D:\graduation\src\main\resources\static" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.study.config" />
     </key>
   </component>
   <component name="RunManager">
@@ -88,6 +101,7 @@
       <workItem from="1668258846305" duration="4799000" />
       <workItem from="1668263698965" duration="386000" />
       <workItem from="1668264114698" duration="940000" />
+      <workItem from="1668336069589" duration="9783000" />
     </task>
     <servers />
   </component>

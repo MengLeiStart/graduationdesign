@@ -6,6 +6,7 @@ import com.study.util.CheckCodeUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -97,5 +99,35 @@ public class UserController {
         String photo = user.getPhoto();
         return new Result(Code.GET_OK,photo,username);
     }
+    //上传头像功能
+    @PostMapping("/files")
+    public Result upload(@RequestParam("userphoto")MultipartFile userphoto,@Param("account")String account){
+        //获得上传的文件名
+        String names = userphoto.getOriginalFilename();
+        //获得上传文件的后缀
+        String lastname = names.substring(names.lastIndexOf("."));
+        //随机生成一个名字
+        String uuid = UUID.randomUUID().toString();
+        //给上传的文件重新命名，防止重名，也解决中文名称图片上传乱码问题
+        names = uuid + lastname;
+        User user = new User();
+        user.setPhoto(names);
+        LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
+        laq.eq(User::getAccount,account);
+        User user1 = userDao.selectOne(laq);
+        int id = user1.getId();
+        user.setId(id);
+        userDao.updateById(user);
+        //将文件放到D盘的image目录下
+        File file = new File("D:/image/" + names);
+        try {
+            userphoto.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //img为映射路径，浏览器为了安全无法直接访问本地文件
+        return new Result(Code.SAVE_OK,"图片上传成功",names);
+    }
+
 }
 

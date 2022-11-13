@@ -1,16 +1,15 @@
 package com.study.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-public class WebMvcSupport implements WebMvcConfigurer {
+@Configuration
+public class WebMvcSupport extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-        registry.addResourceHandler("/imgs/**").addResourceLocations("/imgs/");
-        registry.addResourceHandler("/pages/**").addResourceLocations("/pages/");
-        registry.addResourceHandler("/plugins/**").addResourceLocations("/plugins/");
-        registry.addResourceHandler("index.html").addResourceLocations("index.html");
-        registry.addResourceHandler("/img/**").addResourceLocations("file:/D:/graduation/src/main/resources/static/imgs/");
+        registry.addResourceHandler("/img/**").addResourceLocations("file:D:/image/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+
     }
 }
