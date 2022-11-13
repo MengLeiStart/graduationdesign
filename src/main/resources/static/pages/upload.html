@@ -87,7 +87,7 @@
             <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
-                <span>欢迎登录</span>
+                <span>欢迎登录{{username}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </header>
@@ -148,6 +148,7 @@
             return {
                 activeIndex2: '',
                 url2: '',
+                username:'',
                 url:'/imgs/default.jpg',
                 options: [{
                     value: '选项1',
@@ -181,6 +182,17 @@
 
             }
 
+        },
+        mounted(){
+            var account = sessionStorage.getItem('account');
+            var name = sessionStorage.getItem('username');
+            this.username = name;
+            axios.get("/users/selectByAccount/"+account).then((res)=>{
+                if (res.data.msg == null || res.data.msg == ""){
+                }else {
+                    this.url = "/img/"+res.data.msg;
+                }
+            })
         }
 
     })

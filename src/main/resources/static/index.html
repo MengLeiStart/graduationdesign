@@ -185,6 +185,11 @@
                 console.log(select, input3);
             },
             userup() {
+                //跳转至发表信息页面
+                var account = window.sessionStorage.getItem('useraccount');
+                //将用户账号和昵称携带至upload.html
+                sessionStorage.setItem('username',this.username);
+                sessionStorage.setItem('account',account)
                 window.location.href = 'pages/upload.html'
             },
             //点击盒子即可查看详情页面
