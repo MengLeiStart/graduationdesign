@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="414c8847-b21c-432c-904b-9dd6bddbebc6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/config/FileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/config/FileParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/config/WebMvcSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/config/WebMvcSupport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +94,7 @@
       <workItem from="1668263698965" duration="386000" />
       <workItem from="1668264114698" duration="940000" />
       <workItem from="1668336069589" duration="9783000" />
-      <workItem from="1668346749474" duration="672000" />
+      <workItem from="1668346749474" duration="1108000" />
     </task>
     <servers />
   </component>
