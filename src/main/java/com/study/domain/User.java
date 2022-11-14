@@ -25,7 +25,7 @@ private String sex;
 private String birthday;
 
 @TableField("user_status")
-private boolean status;
+private String status;
 
 @TableField("user_photo")
 private String photo;

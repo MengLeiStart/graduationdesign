@@ -68,7 +68,7 @@
             <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
-                <span>欢迎登录{{username}}</span>
+                <span>欢迎登录{{name}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </header>
@@ -84,7 +84,7 @@
         <br>
         <el-form ref="form" :model="form" label-width="80px" id="informationform">
             <el-form-item label="昵称">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
                 <el-input v-model="form.password"></el-input>
@@ -97,7 +97,7 @@
             </el-form-item>
             <el-form-item label="生日">
                 <el-col :span="11">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.birthday" style="width: 100%;">
                     </el-date-picker>
                 </el-col>
             </el-form-item>
@@ -137,14 +137,15 @@
         data() {
             return {
                 form: {
-                    name: 's',
-                    sex: '男',
-                    date1: '',
+                    username: 's',
+                    sex: '',
+                    birthday: '',
                     status: false,
-                    password: ''
+                    password: '',
+                    account:''
                 },
                 activeIndex2: '',
-                username:'',
+                name:'',
                 //默认头像
                 url:'../imgs/default.jpg',
             }
@@ -152,7 +153,19 @@
         methods: {
             //插件表单提交数据
             onSubmit() {
-                console.log('submit!');
+
+                axios.put("/users/update",this.form).then((res)=>{
+                    if (res.data.code == 20031){
+                        this.$message({
+                            type: 'success',
+                            message: '修改成功'
+                        });
+                        //用户注册成功，两秒后自动跳转登录界面
+                        setTimeout(function (){
+                            location.replace("user.html")
+                        },2000)
+                    }
+                })
             },
             //图片上传功能
             uploads() {
@@ -176,18 +189,28 @@
         },
         mounted(){
             var account = sessionStorage.getItem('account');
-            var name = sessionStorage.getItem('username');
-            this.username = name;
+            this.form.account = account
+            var names = sessionStorage.getItem('username');
+            this.name = names;
             axios.get("/users/selectAllByAccount/"+account).then((res)=>{
                 if (res.data.data.photo == null || res.data.msg == ""){
                 }else {
                     this.url = "/img/"+res.data.data.photo;
                 }
                 console.log(res.data.data)
-                this.form.name = res.data.data.username;
+                console.log(res.data.data.username)
+                console.log(res.data.data.sex)
+                console.log(res.data.data.status)
+                console.log(res.data.data.birthday)
+                console.log(this.form.username)
+                this.form.username = res.data.data.username;
                 this.form.sex = res.data.data.sex;
-                this.form.status = res.data.data.status;
-                this.form.date1 = res.data.data.birthday;
+                if (res.data.data.status == 0){
+                    this.form.status = false;
+                }else{
+                    this.form.status = true;
+                }
+                this.form.birthday = res.data.data.birthday;
             })
         }
     });

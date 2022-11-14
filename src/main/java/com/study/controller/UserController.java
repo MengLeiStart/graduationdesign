@@ -94,10 +94,12 @@ public class UserController {
     @GetMapping("/selectByAccount/{account}")
     public Result selectByAccount(@PathVariable("account")String account){
         LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
+        //根据接收到的account查询数据库里面的用户
         laq.eq(User::getAccount,account);
         User user = userDao.selectOne(laq);
         String username = user.getUsername();
         String photo = user.getPhoto();
+        //将用户的头像和昵称返回给前端
         return new Result(Code.GET_OK,photo,username);
     }
     //查询用户所有信息
@@ -136,6 +138,46 @@ public class UserController {
         }
         //img为映射路径，浏览器为了安全无法直接访问本地文件
         return new Result(Code.SAVE_OK,"图片上传成功",names);
+    }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody User user){
+        String account = user.getAccount();
+        String username = user.getUsername();
+        String password = user.getPassword();
+        String sex = user.getSex();
+        String birthday = user.getBirthday();
+        String status = user.getStatus();
+        LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
+        laq.eq(User::getAccount,account);
+        User user1 = userDao.selectOne(laq);
+        int id = user1.getId();
+        User user2 = new User();
+        user2.setId(id);
+        if (user1.getUsername().equals(username)){
+        }else {
+            user2.setUsername(username);
+        }
+        if (password == null || password == ""){
+        }else {
+            user2.setPassword(password);
+        }
+        if (sex == null){
+        }else {
+            user2.setSex(sex);
+        }
+        if (birthday == null){
+        }else {
+            user2.setBirthday(birthday);
+        }
+        if ("true".equals(status)){
+            status = "1";
+        }else {
+            status = "0";
+        }
+        user2.setStatus(status);
+        userDao.updateById(user2);
+        return new Result(Code.UPDATE_OK,"修改完成");
     }
 
 }
