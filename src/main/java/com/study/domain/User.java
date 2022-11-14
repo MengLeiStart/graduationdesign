@@ -11,8 +11,8 @@ private int id;
 
 @TableField("user_name")
 private String username;
-
-@TableField("user_password")
+//密码不参与查询，防止携带过程泄露
+@TableField(value = "user_password",select = false)
 private String password;
 
 @TableField("user_account")

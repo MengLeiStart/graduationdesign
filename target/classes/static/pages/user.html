@@ -137,8 +137,8 @@
         data() {
             return {
                 form: {
-                    name: '',
-                    sex: '',
+                    name: 's',
+                    sex: '男',
                     date1: '',
                     status: false,
                     password: ''
@@ -147,8 +147,6 @@
                 username:'',
                 //默认头像
                 url:'../imgs/default.jpg',
-
-
             }
         },
         methods: {
@@ -180,11 +178,16 @@
             var account = sessionStorage.getItem('account');
             var name = sessionStorage.getItem('username');
             this.username = name;
-            axios.get("/users/selectByAccount/"+account).then((res)=>{
-                if (res.data.msg == null || res.data.msg == ""){
+            axios.get("/users/selectAllByAccount/"+account).then((res)=>{
+                if (res.data.data.photo == null || res.data.msg == ""){
                 }else {
-                    this.url = "/img/"+res.data.msg;
+                    this.url = "/img/"+res.data.data.photo;
                 }
+                console.log(res.data.data)
+                this.form.name = res.data.data.username;
+                this.form.sex = res.data.data.sex;
+                this.form.status = res.data.data.status;
+                this.form.date1 = res.data.data.birthday;
             })
         }
     });

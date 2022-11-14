@@ -74,6 +74,7 @@ public class UserController {
         }
 
     }
+    //登录功能
     @PostMapping("/login")
     //接收前端传来的账号和密码，并将其与对应变量一一绑定
     public Result login(HttpServletResponse response, HttpServletRequest request,@Param("account")String account,
@@ -89,6 +90,7 @@ public class UserController {
             return new Result(Code.GET_ERR,"查无此人");
         }
     }
+    //查询用户昵称和头像
     @GetMapping("/selectByAccount/{account}")
     public Result selectByAccount(@PathVariable("account")String account){
         LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
@@ -97,6 +99,14 @@ public class UserController {
         String username = user.getUsername();
         String photo = user.getPhoto();
         return new Result(Code.GET_OK,photo,username);
+    }
+    //查询用户所有信息
+    @GetMapping("/selectAllByAccount/{account}")
+    public Result selectAllByAccount(@PathVariable("account")String account){
+        LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
+        laq.eq(User::getAccount,account);
+        User user = userDao.selectOne(laq);
+        return new Result(Code.GET_OK,"查询成功",user);
     }
     //上传头像功能
     @PostMapping("/files")
