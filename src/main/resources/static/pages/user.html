@@ -84,7 +84,8 @@
         <br>
         <el-form ref="form" :model="form" label-width="80px" id="informationform">
             <el-form-item label="昵称">
-                <el-input v-model="form.username"></el-input>
+                <el-input v-model="form.username" v-on:focus="errmsg()"></el-input>
+                <span id="username_err" class="err_msg" style="display: none">昵称不能为(含)空格哦！</span>
             </el-form-item>
             <el-form-item label="密码">
                 <el-input v-model="form.password"></el-input>
@@ -137,7 +138,7 @@
         data() {
             return {
                 form: {
-                    username: 's',
+                    username: '',
                     sex: '',
                     birthday: '',
                     status: false,
@@ -151,21 +152,30 @@
             }
         },
         methods: {
-            //插件表单提交数据
+            //修改用户信息
             onSubmit() {
+                //存在空白字符的正则表达式
+                var rule = /[ ]/
+               //用户昵称不能为空或含空格
+                if (rule.exec(this.form.username) != null || this.form.username == ""){
+                    //如果用户名违反规则，出现错误提示信息
+                    var usernameerr = document.getElementById('username_err');
+                    usernameerr.style.display="block";
+                }else{
+                    axios.put("/users/update",this.form).then((res)=>{
+                        if (res.data.code == 20031){
+                            this.$message({
+                                type: 'success',
+                                message: '修改成功'
+                            });
+                            //用户信息修改成功，两秒后自动跳转user界面
+                            setTimeout(function (){
+                                location.replace("user.html")
+                            },2000)
+                        }
+                    })
+                }
 
-                axios.put("/users/update",this.form).then((res)=>{
-                    if (res.data.code == 20031){
-                        this.$message({
-                            type: 'success',
-                            message: '修改成功'
-                        });
-                        //用户注册成功，两秒后自动跳转登录界面
-                        setTimeout(function (){
-                            location.replace("user.html")
-                        },2000)
-                    }
-                })
             },
             //图片上传功能
             uploads() {
@@ -186,24 +196,21 @@
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
             },
+            errmsg(){
+                var usernameerr = document.getElementById('username_err');
+                usernameerr.style.display="none";
+            }
         },
         mounted(){
             var account = sessionStorage.getItem('account');
             this.form.account = account
-            var names = sessionStorage.getItem('username');
-            this.name = names;
             axios.get("/users/selectAllByAccount/"+account).then((res)=>{
                 if (res.data.data.photo == null || res.data.msg == ""){
                 }else {
                     this.url = "/img/"+res.data.data.photo;
                 }
-                console.log(res.data.data)
-                console.log(res.data.data.username)
-                console.log(res.data.data.sex)
-                console.log(res.data.data.status)
-                console.log(res.data.data.birthday)
-                console.log(this.form.username)
                 this.form.username = res.data.data.username;
+                this.name = res.data.data.username;
                 this.form.sex = res.data.data.sex;
                 if (res.data.data.status == 0){
                     this.form.status = false;
@@ -212,6 +219,7 @@
                 }
                 this.form.birthday = res.data.data.birthday;
             })
+
         }
     });
 

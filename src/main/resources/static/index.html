@@ -37,6 +37,9 @@
     a {
         text-decoration: none;
     }
+    body{
+        background-color: white;
+    }
 
 </style>
 <style type="text/css">
@@ -110,11 +113,8 @@
                 <el-menu-item index="3" v-on:click="userinformation()">个人中心</el-menu-item>
                 <span>欢迎登录{{username}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
-
             </el-menu>
-
         </header>
-
         <div style="margin-top: 30px;" class="sousuo">
             <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
@@ -138,7 +138,6 @@
             </section>
         </main>
     </div>
-
 </body>
 <script src="plugins/vue.js"></script>
 <script src="plugins/jquery-1.11.0.min.js"></script>
@@ -154,7 +153,6 @@
             margin_bottom: 50,
             single_column_breakpoint: 700
         });
-
     });
 </script>
 <script>
@@ -163,7 +161,6 @@
 <script>
     new Vue({
         el: "#app",
-
         data() {
             return {
                 activeIndex2: '',
@@ -216,11 +213,7 @@
                      this.url = "/img/"+res.data.msg
                  }
             })
-
         }
-
     })
-
 </script>
-
 </html>
