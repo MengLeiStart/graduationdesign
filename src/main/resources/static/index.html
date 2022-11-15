@@ -60,7 +60,7 @@
         position: absolute;
         background: white;
         border-radius: 5px;
-        box-shadow: 0px 1px 2px rgba(6, 166, 246, 0.837);
+        box-shadow: 0px 1px 2px rgba(5, 5, 5, 0.84);
         padding: 10px;
     }
 
@@ -73,7 +73,7 @@
     }
 
     .white-panel:hover {
-        box-shadow: 1px 1px 10px rgba(16, 168, 249, 0.725);
+        box-shadow: 1px 1px 10px rgba(85, 85, 86, 0.72);
         margin-top: -5px;
         -webkit-transition: all 0.3s ease-in-out;
         -moz-transition: all 0.3s ease-in-out;
@@ -83,7 +83,6 @@
 
     .headermenu img {
         float: right;
-
         vertical-align: middle;
     }
 
@@ -114,6 +113,7 @@
                 <span>欢迎登录{{username}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
+
         </header>
         <div style="margin-top: 30px;" class="sousuo">
             <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
@@ -131,9 +131,9 @@
         <main>
             <section id="gallery-wrapper">
                 <article class="white-panel" v-for="show in usershow" v-on:click="details(show)">
-                    <img src="imgs/a.jpg" class="thumb">
-                    <h1><a href="#">{{show}}</a></h1>
-                    <p>ds</p>
+                    <img v-bind:src="/img/+show.photo" class="thumb">
+                    <h1><a href="#">{{show.name}}</a></h1>
+                    <p>{{show.description}}</p>
                 </article><br>
             </section>
         </main>
@@ -166,7 +166,12 @@
                 activeIndex2: '',
                 input3: '',
                 select: '',
-                usershow: ["1", "2", "3"],
+                usershow: [{
+                    photo:'',
+                    description:'',
+                    type:'',
+                    name:''
+                }],
                 //用户昵称
                 username:'',
                 url:'/imgs/default.jpg'
@@ -205,13 +210,15 @@
             }
         },
         mounted(){
-            var account = window.sessionStorage.getItem('useraccount')
+            var account = sessionStorage.getItem('useraccount')
             axios.get("/users/selectByAccount/"+account).then((res)=>{
                  this.username = res.data.data;
-                 console.log(res.data.msg)
                  if (res.data.msg != null || res.data.msg == ""){
                      this.url = "/img/"+res.data.msg
                  }
+            })
+            axios.get("/informations/getAll").then((res)=>{
+                this.usershow = res.data.data
             })
         }
     })

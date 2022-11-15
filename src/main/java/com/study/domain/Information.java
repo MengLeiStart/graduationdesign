@@ -14,4 +14,8 @@ public class Information {
     private String description;
     @TableField("information_type")
     private String type;
+    @TableField("information_useraccount")
+    private String useraccount;
+    @TableField("information_username")
+    private String name;
 }

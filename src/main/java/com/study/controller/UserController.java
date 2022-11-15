@@ -26,6 +26,7 @@ public class UserController {
     //生成验证码
     @RequestMapping("/checkCode")
     public void checkCode(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        //获取流，来输出验证码
         HttpSession session = request.getSession();
         ServletOutputStream os = response.getOutputStream();
         String code = CheckCodeUtil.outputVerifyImage(100,50,os,4);
@@ -117,27 +118,32 @@ public class UserController {
         String names = userphoto.getOriginalFilename();
         //获得上传文件的后缀
         String lastname = names.substring(names.lastIndexOf("."));
-        //随机生成一个名字
-        String uuid = UUID.randomUUID().toString();
-        //给上传的文件重新命名，防止重名，也解决中文名称图片上传乱码问题
-        names = uuid + lastname;
-        User user = new User();
-        user.setPhoto(names);
-        LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
-        laq.eq(User::getAccount,account);
-        User user1 = userDao.selectOne(laq);
-        int id = user1.getId();
-        user.setId(id);
-        userDao.updateById(user);
-        //将文件放到D盘的image目录下
-        File file = new File("D:/image/" + names);
-        try {
-            userphoto.transferTo(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(".jpg".equals(lastname) || ".jpeg".equals(lastname) || ".png".equals(lastname)){
+            //随机生成一个名字
+            String uuid = UUID.randomUUID().toString();
+            //给上传的文件重新命名，防止重名，也解决中文名称图片上传乱码问题
+            names = uuid + lastname;
+            User user = new User();
+            user.setPhoto(names);
+            LambdaQueryWrapper<User> laq = new LambdaQueryWrapper<>();
+            laq.eq(User::getAccount,account);
+            User user1 = userDao.selectOne(laq);
+            int id = user1.getId();
+            user.setId(id);
+            userDao.updateById(user);
+            //将文件放到D盘的image目录下
+            File file = new File("D:/image/" + names);
+            try {
+                userphoto.transferTo(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //img为映射路径，浏览器为了安全无法直接访问本地文件
+            return new Result(Code.SAVE_OK,"图片上传成功",names);
+        }else {
+            return new Result(Code.SAVE_ERR,"请上传图片格式文件");
         }
-        //img为映射路径，浏览器为了安全无法直接访问本地文件
-        return new Result(Code.SAVE_OK,"图片上传成功",names);
+
     }
 
     @PutMapping("/update")

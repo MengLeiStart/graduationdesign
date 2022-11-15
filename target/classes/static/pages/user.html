@@ -46,7 +46,6 @@
 
     .headermenu img {
         float: right;
-
         vertical-align: middle;
     }
 
@@ -132,7 +131,6 @@
     }
 </script>
 <script>
-
     new Vue({
         el: "#app",
         data() {
@@ -156,9 +154,9 @@
             onSubmit() {
                 //存在空白字符的正则表达式
                 var rule = /[ ]/
-                console.log(rule.exec(this.form.username))
-                console.log(this.form.username)
+               //用户昵称不能为空或含空格
                 if (rule.exec(this.form.username) != null || this.form.username == ""){
+                    //如果用户名违反规则，出现错误提示信息
                     var usernameerr = document.getElementById('username_err');
                     usernameerr.style.display="block";
                 }else{
@@ -184,13 +182,20 @@
                 var account = sessionStorage.getItem('account');
                 fd.append("account",account);
                 axios.post("/users/files", fd).then((res) => {
-                    console.log(res.data.data)
-                    this.url = "/img/"+res.data.data;
+                    if(res.data.code == 20010){
+                        this.$message({
+                            type: 'error',
+                            message: '请上传图片文件'
+                        });
+                    }else{
+                        this.url = "/img/"+res.data.data;
+                    }
                 })
             },
             //跳转首页
             userindex() {
                 window.location.href = '../index.html'
+
             },
             //顶部导航栏执行的方法以及对应参数
             handleSelect(key, keyPath) {
@@ -202,6 +207,7 @@
             }
         },
         mounted(){
+
             var account = sessionStorage.getItem('account');
             this.form.account = account
             axios.get("/users/selectAllByAccount/"+account).then((res)=>{

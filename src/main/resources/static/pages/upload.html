@@ -94,12 +94,12 @@
         <main>
             <form enctype="multipart/form-data;" method="post" class="efo">
                 <img :src="url2" id="preview" class="rmg" width="300px" height="300px">
-                <input type="file" name="photoss" value="photoss" id="selectfile" onchange="setImagePreview()">
+                <input type="file" name="photo" value="photo" id="selectfile" onchange="setImagePreview()">
                 <br>
                 <el-button type="primary" plain id="replace">选择图片</el-button>
                 <br>
                 <template>
-                    <el-select v-model="value" placeholder="请选择">
+                    <el-select v-model="type" placeholder="请选择">
                         <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -110,7 +110,7 @@
                 </template>
                 <br>
                 <br>
-                <textarea cols="70" rows="10" placeholder="说点啥吧..." name="textarea"></textarea>
+                <textarea cols="70" rows="10" placeholder="说点啥吧..." name="description"></textarea>
                 <br>
                 <el-button type="primary" round class="insert" id="uploadimg" plain v-on:click="uploads()">发表
                 </el-button>
@@ -134,7 +134,6 @@
     function setImagePreview() {
         var docObj = document.getElementById("selectfile");
         var imgObjPreview = document.getElementById("preview");
-        console.log(docObj.files[0])
         if (docObj.files && docObj.files[0]) {
             imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
         }
@@ -151,22 +150,22 @@
                 username:'',
                 url:'/imgs/default.jpg',
                 options: [{
-                    value: '选项1',
+                    value: '表白',
                     label: '表白'
                 }, {
-                    value: '选项2',
+                    value: '找人',
                     label: '找人'
                 }, {
-                    value: '选项3',
+                    value: '日常',
                     label: '日常'
                 }, {
-                    value: '选项4',
+                    value: '二手',
                     label: '二手'
                 }, {
-                    value: '选项5',
+                    value: '拼车',
                     label: '拼车'
                 }],
-                value: ''
+                type: ''
             }
         },
         methods: {
@@ -179,7 +178,42 @@
             },
             //上传用户发表数据
             uploads() {
+            var efo = document.querySelector('.efo');
+            var newform = new FormData(efo);
+            newform.append("type",this.type);
+            newform.append("username",this.username);
+            var account = sessionStorage.getItem("account");
+            newform.append("account",account);
+            if (this.type == ""){
+                this.$message({
+                    type: 'error',
+                    message: '请选择对应分类'
+                });
+            }else if (newform.get("photo").name == "" && newform.get("description") == ""){
+                this.$message({
+                    type: 'error',
+                    message: '请完善发表信息'
+                });
+            }else {
+                axios.post("/informations/upload",newform).then((res)=>{
+                    //根据后端传来得值判断是否完成发表
+                    if (res.data.code == 20011){
+                        this.$message({
+                            type: 'success',
+                            message: '发表完成'
+                        });
+                        setTimeout(function (){
+                            location.replace("../index.html")
+                        },2000)
 
+                    }else {
+                        this.$message({
+                            type: 'error',
+                            message: res.data.msg
+                        });
+                    }
+                })
+            }
             }
 
         },
