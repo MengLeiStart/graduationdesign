@@ -102,12 +102,12 @@
                 <el-menu-item index="1" v-on:click="userup()">发表</el-menu-item>
                 <el-submenu index="2">
                     <template slot="title">类别</template>
-                    <el-menu-item index="2-1">表白</el-menu-item>
-                    <el-menu-item index="2-2">捞人</el-menu-item>
-                    <el-menu-item index="2-3">日常</el-menu-item>
-                    <el-menu-item index="2-4">二手</el-menu-item>
-                    <el-menu-item index="2-5">拼车</el-menu-item>
-                    <el-menu-item index="2-6">综合</el-menu-item>
+                    <el-menu-item index="表白">表白</el-menu-item>
+                    <el-menu-item index="捞人">捞人</el-menu-item>
+                    <el-menu-item index="日常">日常</el-menu-item>
+                    <el-menu-item index="二手">二手</el-menu-item>
+                    <el-menu-item index="拼车">拼车</el-menu-item>
+                    <el-menu-item index="综合">综合</el-menu-item>
                 </el-submenu>
                 <el-menu-item index="3" v-on:click="userinformation()">个人中心</el-menu-item>
                 <span>欢迎登录{{username}}</span>
@@ -118,12 +118,8 @@
         <div style="margin-top: 30px;" class="sousuo">
             <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
-                    <el-option label="表白" value="1"></el-option>
-                    <el-option label="找人" value="2"></el-option>
-                    <el-option label="日常" value="3"></el-option>
-                    <el-option label="二手" value="4"></el-option>
-                    <el-option label="拼车" value="5"></el-option>
-                    <el-option label="综合" value="6"></el-option>
+                    <el-option label="用户" value="用户"></el-option>
+                    <el-option label="内容" value="内容"></el-option>
                 </el-select>
                 <el-button slot="append" icon="el-icon-search" v-on:click="searchneed(select,input3)"></el-button>
             </el-input>
@@ -170,7 +166,9 @@
                     photo:'',
                     description:'',
                     type:'',
-                    name:''
+                    name:'',
+                    useraccount:'',
+                    id:''
                 }],
                 //用户昵称
                 username:'',
@@ -180,7 +178,16 @@
         methods: {
             //顶部导航栏执行的方法以及对应参数
             handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+                axios.get("/informations/getByType/"+key).then((res)=>{
+                    if (res.data.code == 20040){
+                        this.$message({
+                            type: 'error',
+                            message: res.data.msg
+                        });
+                    }else {
+                        this.usershow = res.data.data
+                    }
+                })
             },
             //搜索框执行的方法以及对应参数
             searchneed(select, input3) {
@@ -196,8 +203,10 @@
             },
             //点击盒子即可查看详情页面
             details(show) {
+                sessionStorage.setItem('photo',show.photo);
+                sessionStorage.setItem('description',this.usershow.description);
+                sessionStorage.setItem('id',this.usershow.id);
                 location.replace("pages/informationdetails.html");
-                window.sessionStorage.setItem('show', show);
             },
             //个人中心
             userinformation() {

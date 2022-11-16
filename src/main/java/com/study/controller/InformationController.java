@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,12 +60,28 @@ public class InformationController {
             informationDao.insert(inf);
             return new Result(Code.SAVE_OK,"上传成功");
         }
-
     }
     @GetMapping("/getAll")
     public Result getAll(){
         List<Information> informationList = informationDao.selectList(null);
         System.out.println(informationList);
         return new Result(Code.GET_OK,"查询成功",informationList);
+    }
+    @GetMapping("/getByType/{key}")
+    public Result getByType(@PathVariable("key")String key){
+        List<Information> information;
+        if ("综合".equals(key)){
+            information = informationDao.selectList(null);
+        }else{
+            LambdaQueryWrapper<Information> laq = new LambdaQueryWrapper<>();
+            laq.eq(Information::getType,key);
+            information = informationDao.selectList(laq);
+        }
+        if (information.size() == 0){
+            return new Result(Code.GET_ERR,"没有相关内容");
+        }else {
+            return new Result(Code.GET_OK,"查询完成",information);
+        }
+
     }
 }
