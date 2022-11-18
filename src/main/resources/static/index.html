@@ -127,7 +127,7 @@
         <main>
             <section id="gallery-wrapper">
                 <article class="white-panel" v-for="show in usershow" v-on:click="details(show)">
-                    <img v-bind:src="/img/+show.photo" class="thumb">
+                    <img v-bind:src="/image/+show.photo" class="thumb">
                     <h1><a href="#">{{show.name}}</a></h1>
                     <p>{{show.description}}</p>
                 </article><br>
@@ -163,14 +163,20 @@
                 input3: '',
                 select: '',
                 usershow: [{
+                    //发布信息包含的图片
                     photo:'',
+                    //发布信息包含的文字
                     description:'',
+                    //信息类别
                     type:'',
+                    //信息发布者的昵称
                     name:'',
+                    //信息发布者的账号
                     useraccount:'',
+                    //信息id
                     id:''
                 }],
-                //用户昵称
+                //用户自己的昵称
                 username:'',
                 url:'/imgs/default.jpg'
             }
@@ -203,6 +209,13 @@
             },
             //点击盒子即可查看详情页面
             details(show) {
+                //将用户自己的账号和昵称携带至详情页
+                var account = window.sessionStorage.getItem('useraccount');
+                sessionStorage.setItem('username',this.username);
+                sessionStorage.setItem('account',account)
+                //信息发布者的账号
+                sessionStorage.setItem('accounts',show.useraccount);
+                //将该盒子得图片和内容以及该盒子对应得信息id携带给详情页
                 sessionStorage.setItem('photo',show.photo);
                 sessionStorage.setItem('description',show.description);
                 sessionStorage.setItem('id',show.id);
@@ -219,6 +232,7 @@
             }
         },
         mounted(){
+            //查询自己的用户信息展示在右上角
             var account = sessionStorage.getItem('useraccount')
             axios.get("/users/selectByAccount/"+account).then((res)=>{
                  this.username = res.data.data;
@@ -226,6 +240,7 @@
                      this.url = "/img/"+res.data.msg
                  }
             })
+            //查询数据库的用户发表的信息
             axios.get("/informations/getAll").then((res)=>{
                 this.usershow = res.data.data
             })

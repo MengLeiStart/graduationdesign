@@ -82,6 +82,22 @@
         line-height: 60px;
         vertical-align: middle;
     }
+    p{
+        color: #efa80e;
+    }
+    .userphoto{
+        border-radius:50%;
+        margin: 0 auto;
+    }
+    .details .userphoto{
+        margin-left: 35%;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .details h4{
+        display: inline-block;
+        margin: 0;
+    }
 </style>
 
 <body>
@@ -91,19 +107,23 @@
                 background-color="skyblue" text-color="black" active-text-color="red">
                 <el-menu-item index="1" v-on:click="userindex()">首页</el-menu-item>
                 <el-menu-item index="2" v-on:click="userinformation()">个人中心</el-menu-item>
-                <span>欢迎登录</span>
+                <span>欢迎登录{{name}}</span>
                 <img v-bind:src="url" width="60px" height="60px">
             </el-menu>
         </div>
         <main>
             <div class="details">
                 <!-- 用户图片展示区 -->
-                <form>
-                    <h4></h4>
-                    <img src="" width="300px" height="300px" class="showimg">
-                    <p></p>
-                </form>
 
+                    <img v-bind:src="/img/+userphoto" class="userphoto" height="80px" width="80px" >
+                    <h4>{{username}}</h4>
+                <br>
+                <br>
+                    <img v-bind:src="/image/+photo" width="300px" height="300px" class="showimg">
+                    <br>
+                    <p>{{description}}</p>
+                <br>
+                <br>
                 <ul class="showli">
 
                 </ul>
@@ -129,8 +149,18 @@
         data() {
             return {
                 activeIndex2: '',
-                shows: '',
-                url:'../imgs/default.jpg'
+                //用户自己的头像
+                url:'../imgs/default.jpg',
+                //用户自己的昵称
+                name:'',
+                //发布信息包含的图片
+                photo:'',
+                //发布信息包含的文字
+                description:'',
+                //信息发布者的头像
+                userphoto:'',
+                //信息发布者的昵称
+                username:'',
             };
         },
         methods: {
@@ -153,7 +183,40 @@
             }
         },
         mounted() {
-            console.log(sessionStorage.getItem('photo'))
+            //用户自己的账号
+            var account = sessionStorage.getItem('account')
+            //获取信息详情参数
+            //信息包含的图片
+            var photo = sessionStorage.getItem('photo');
+            this.photo = photo;
+            //信息发布者的account
+            var item = sessionStorage.getItem('accounts');
+            var description = sessionStorage.getItem('description');
+            //信息包含的文字消息
+            this.description = description;
+            //该信息的id
+            var id = sessionStorage.getItem('id');
+            //右上角个人信息
+            axios.get("/users/selectAllByAccount/"+account).then((res)=>{
+                if (res.data.data.photo == null || res.data.data.photo == ""){
+
+                }else {
+                    this.url = "/img/"+res.data.data.photo;
+                }
+                //用户自己的昵称
+                this.name = res.data.data.username;
+            })
+            //查询信息发布者的信息
+            axios.get("/users/selectAllByAccount/"+item).then((res)=>{
+                if (res.data.data.photo == null || res.data.data.photo == " "){
+                    //信息发布者的头像
+                    this.userphoto = "../imgs/default.jpg"
+                }else {
+                    this.userphoto = res.data.data.photo;
+                }
+                //信息发布者的昵称
+                this.username = res.data.data.username;
+            })
         }
 
     })

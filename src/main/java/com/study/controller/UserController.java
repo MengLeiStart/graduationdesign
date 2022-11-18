@@ -40,7 +40,6 @@ public class UserController {
                         , @Param("checkCode")String checkCode) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Object checkCodegen = session.getAttribute("checkCodegen");
-        System.out.println(checkCodegen);
         if (username == null){
             return new Result(Code.SAVE_ERR,"昵称不能为空");
         }else if (account == null){
