@@ -182,6 +182,7 @@
                 var account = sessionStorage.getItem('account');
                 fd.append("account",account);
                 axios.post("/users/files", fd).then((res) => {
+                    //用户上传的是非图片时
                     if(res.data.code == 20010){
                         this.$message({
                             type: 'error',

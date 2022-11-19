@@ -245,6 +245,9 @@
                 //信息发布者的账号
                 sessionStorage.setItem('accounts',show.useraccount);
                 //将该盒子得图片和内容以及该盒子对应得信息id携带给详情页
+                if (show.photo == null){
+                    show.photo = "1";
+                }
                 sessionStorage.setItem('photo',show.photo);
                 sessionStorage.setItem('description',show.description);
                 sessionStorage.setItem('id',show.id);

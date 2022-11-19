@@ -211,13 +211,16 @@
                     });
                 }else {
                     axios.get("/informations/getInformationByLimit/"+select+"/"+input3).then((res)=>{
+                        //查询到相应的信息
                         if (res.data.code == 20041){
                             this.usershow = res.data.data
+                            //未查询到信息
                         }else if (res.data.code == 20040){
                             this.$message({
                                 type: 'error',
                                 message: res.data.msg
                             });
+                            //查询遇到未知错误
                         }else{
                             this.$message({
                                 type: 'error',
@@ -245,9 +248,14 @@
                 //信息发布者的账号
                 sessionStorage.setItem('accounts',show.useraccount);
                 //将该盒子得图片和内容以及该盒子对应得信息id携带给详情页
+                //当用户发表的信息中不含图片时，将图片值设为1携带至详情页进行判断
+                if (show.photo == null){
+                    show.photo = "1";
+                }
                 sessionStorage.setItem('photo',show.photo);
                 sessionStorage.setItem('description',show.description);
                 sessionStorage.setItem('id',show.id);
+                //跳转详情页
                 location.replace("pages/informationdetails.html");
             },
             //个人中心
