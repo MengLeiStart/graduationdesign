@@ -1,8 +1,10 @@
 package com.study.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.study.dao.CommentDao;
 import com.study.dao.InformationDao;
 import com.study.dao.UserDao;
+import com.study.domain.Comment;
 import com.study.domain.Information;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.util.UUID;
 public class InformationController {
     @Autowired
     InformationDao informationDao;
+
+    @Autowired
+    CommentDao commentDao;
 
     @PostMapping("/upload")
     public Result upload(@RequestParam("photo") MultipartFile photo, @Param("description")String description,
@@ -60,11 +65,13 @@ public class InformationController {
             return new Result(Code.SAVE_OK,"上传成功");
         }
     }
+    //查询所有的信息
     @GetMapping("/getAll")
     public Result getAll(){
         List<Information> informationList = informationDao.selectList(null);
         return new Result(Code.GET_OK,"查询成功",informationList);
     }
+    //根据类别来查询对应的信息
     @GetMapping("/getByType/{key}")
     public Result getByType(@PathVariable("key")String key){
         List<Information> information;
@@ -80,6 +87,26 @@ public class InformationController {
         }else {
             return new Result(Code.GET_OK,"查询完成",information);
         }
-
     }
+    //添加评论的功能
+    @PostMapping("/addComment")
+    public Result addComment(@Param("comment") String comment,@Param("id")int id){
+        Comment comment1 = new Comment();
+        comment1.setComment(comment);
+        comment1.setOtherId(id);
+        commentDao.insert(comment1);
+        return new Result(Code.SAVE_OK,"评论成功");
+    }
+    //查询评论功能
+    @GetMapping("/getComment/{id}")
+    public Result getComment(@PathVariable("id")Integer id){
+        LambdaQueryWrapper<Comment> laq = new LambdaQueryWrapper<>();
+        laq.eq(Comment::getOtherId,id);
+        List<Comment> comments = commentDao.selectList(laq);
+        for (int i = 0; i < comments.size(); i++) {
+            System.out.println(comments.get(i).getComment());
+        }
+        return new Result(Code.GET_OK,"查询完成",comments);
+    }
+
 }

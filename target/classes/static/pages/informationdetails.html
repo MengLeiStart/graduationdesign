@@ -161,6 +161,8 @@
                 userphoto:'',
                 //信息发布者的昵称
                 username:'',
+                //信息的id
+                id:''
             };
         },
         methods: {
@@ -171,12 +173,26 @@
             userindex() {
                 window.location.href = '../index.html'
             },
+            //评论功能
             uploads() {
                 var ul = document.querySelector('.showli')
                 var lis = document.createElement("li")
                 ul.append(lis)
-                lis.innerHTML = ($(".txt").val())
+                lis.innerHTML = "评论人:"+this.name+"<br>"+($(".txt").val())+"<br>"+
+                    new Date().getFullYear()+"年"+(new Date().getMonth()+1)+"月"+new Date().getDate()+"日"+
+                    new Date().getHours()+":"+new Date().getMinutes()+"<br>"+"<br>"
                 $(".txt").val("")
+                var fd = new FormData();
+                fd.append("comment",lis.innerHTML)
+                fd.append("id",this.id)
+                axios.post("/informations/addComment",fd).then((res)=>{
+                    if (res.data.code == 20011){
+                        this.$message({
+                            type: 'success',
+                            message: res.data.msg
+                        });
+                    }
+                })
             },
             userinformation() {
                 location.replace("../pages/user.html");
@@ -196,6 +212,7 @@
             this.description = description;
             //该信息的id
             var id = sessionStorage.getItem('id');
+            this.id = id;
             //右上角个人信息
             axios.get("/users/selectAllByAccount/"+account).then((res)=>{
                 if (res.data.data.photo == null || res.data.data.photo == ""){
@@ -216,6 +233,16 @@
                 }
                 //信息发布者的昵称
                 this.username = res.data.data.username;
+            })
+            //查询该信息的评论
+            axios.get("/informations/getComment/"+id).then((res)=>{
+                var ul = document.querySelector('.showli')
+                var lis = document.createElement("li")
+                ul.append(lis)
+                for (var i = 0 ; i < res.data.data.length; i++){
+                    lis.innerHTML += res.data.data[i].comment;
+                }
+
             })
         }
 
