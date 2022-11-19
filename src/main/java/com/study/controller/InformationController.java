@@ -28,7 +28,6 @@ public class InformationController {
     @PostMapping("/upload")
     public Result upload(@RequestParam("photo") MultipartFile photo, @Param("description")String description,
                          @Param("type") String type,@Param("account")String account,@Param("username")String username){
-        if (photo != null) {
             //获取文件名
             String filename = photo.getOriginalFilename();
             //获取文件后缀名
@@ -55,15 +54,18 @@ public class InformationController {
             } else {
                 return new Result(Code.SAVE_ERR, "请勿上传非图片文件");
             }
-        }else{
-            Information inf = new Information();
-            inf.setDescription(description);
-            inf.setType(type);
-            inf.setUseraccount(account);
-            inf.setName(username);
-            informationDao.insert(inf);
-            return new Result(Code.SAVE_OK,"上传成功");
-        }
+
+    }
+    @PostMapping("/uploads")
+    public Result uploads(@Param("description")String description,
+                          @Param("type") String type,@Param("account")String account,@Param("username")String username){
+        Information inf = new Information();
+        inf.setDescription(description);
+        inf.setType(type);
+        inf.setUseraccount(account);
+        inf.setName(username);
+        informationDao.insert(inf);
+        return new Result(Code.SAVE_OK,"上传成功");
     }
     //查询所有的信息
     @GetMapping("/getAll")

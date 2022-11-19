@@ -9,6 +9,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/study/controller/InformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/controller/InformationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/informationdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/upload.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/study/controller/InformationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/controller/InformationController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +109,8 @@
       <workItem from="1668770232429" duration="316000" />
       <workItem from="1668775556404" duration="6463000" />
       <workItem from="1668823817989" duration="6617000" />
-      <workItem from="1668838438133" duration="2904000" />
+      <workItem from="1668838438133" duration="3348000" />
+      <workItem from="1668841914395" duration="4108000" />
     </task>
     <servers />
   </component>

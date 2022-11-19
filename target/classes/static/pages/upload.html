@@ -194,7 +194,27 @@
                     type: 'error',
                     message: '请完善发表信息'
                 });
-            }else {
+            }else if (newform.get("photo").name == ""){
+                axios.post("/informations/uploads",newform).then((res)=>{
+                    //根据后端传来得值判断是否完成发表
+                    if (res.data.code == 20011){
+                        this.$message({
+                            type: 'success',
+                            message: '发表完成'
+                        });
+                        setTimeout(function (){
+                            location.replace("../index.html")
+                        },2000)
+
+                    }else {
+                        this.$message({
+                            type: 'error',
+                            message: res.data.msg
+                        });
+                    }
+                })
+            }
+            else {
                 axios.post("/informations/upload",newform).then((res)=>{
                     //根据后端传来得值判断是否完成发表
                     if (res.data.code == 20011){

@@ -126,8 +126,13 @@
         </div>
         <main>
             <section id="gallery-wrapper">
-                <article class="white-panel" v-for="show in usershow" v-on:click="details(show)">
-                    <img v-bind:src="/image/+show.photo" class="thumb">
+                <article class="white-panel" v-for="show in usershow" v-on:click="details(show)" >
+                    <div v-if="show.photo != null">
+                        <img v-bind:src="/image/+show.photo" class="thumb">
+                    </div>
+                    <div v-else>
+
+                    </div>
                     <h1><a href="#">{{show.name}}</a></h1>
                     <p>{{show.description}}</p>
                 </article><br>
