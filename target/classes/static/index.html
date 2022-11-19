@@ -118,8 +118,8 @@
         <div style="margin-top: 30px;" class="sousuo">
             <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
-                    <el-option label="用户" value="用户"></el-option>
-                    <el-option label="内容" value="内容"></el-option>
+                    <el-option label="用户" value="1"></el-option>
+                    <el-option label="内容" value="2"></el-option>
                 </el-select>
                 <el-button slot="append" icon="el-icon-search" v-on:click="searchneed(select,input3)"></el-button>
             </el-input>
@@ -184,6 +184,8 @@
         methods: {
             //顶部导航栏执行的方法以及对应参数
             handleSelect(key, keyPath) {
+                this.input3 = "";
+                this.select = "";
                 axios.get("/informations/getByType/"+key).then((res)=>{
                     if (res.data.code == 20040){
                         this.$message({
@@ -197,7 +199,29 @@
             },
             //搜索框执行的方法以及对应参数
             searchneed(select, input3) {
-                console.log(select, input3);
+                if (select == "" || input3 == ""){
+                    this.$message({
+                        type: 'error',
+                        message: "请完善搜索内容"
+                    });
+                }else {
+                    axios.get("/informations/getInformationByLimit/"+select+"/"+input3).then((res)=>{
+                        if (res.data.code == 20041){
+                            this.usershow = res.data.data
+                        }else if (res.data.code == 20040){
+                            this.$message({
+                                type: 'error',
+                                message: res.data.msg
+                            });
+                        }else{
+                            this.$message({
+                                type: 'error',
+                                message: "系统繁忙,请稍后再试"
+                            });
+                        }
+                    })
+                }
+
             },
             userup() {
                 //跳转至发表信息页面

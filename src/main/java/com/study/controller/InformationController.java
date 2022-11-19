@@ -103,10 +103,31 @@ public class InformationController {
         LambdaQueryWrapper<Comment> laq = new LambdaQueryWrapper<>();
         laq.eq(Comment::getOtherId,id);
         List<Comment> comments = commentDao.selectList(laq);
-        for (int i = 0; i < comments.size(); i++) {
-            System.out.println(comments.get(i).getComment());
-        }
         return new Result(Code.GET_OK,"查询完成",comments);
+    }
+    //根据用户输入，查询对应信息
+    @GetMapping("/getInformationByLimit/{select}/{input3}")
+    public Result getInformationByLimit(@PathVariable("select") String select,@PathVariable("input3") String input3){
+        LambdaQueryWrapper<Information> laq = new LambdaQueryWrapper<>();
+        if ("2".equals(select)){
+            laq.like(Information::getDescription,input3);
+            List<Information> information = informationDao.selectList(laq);
+            if (information.size() > 0){
+                return new Result(Code.GET_OK,"查询到数据",information);
+            }else {
+                return new Result(Code.GET_ERR,"未查询到数据");
+            }
+        }else if ("1".equals(select)){
+            laq.eq(Information::getName,input3);
+            List<Information> information = informationDao.selectList(laq);
+            if (information.size() > 0){
+                return new Result(Code.GET_OK,"查询到数据",information);
+            }else {
+                return new Result(Code.GET_ERR,"未查询到数据");
+            }
+        }else {
+            return null;
+        }
     }
 
 }
